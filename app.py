@@ -1,10 +1,8 @@
-# Simple currency converter app
 from flask import Flask, render_template, request, jsonify
 import requests
 
 app = Flask(__name__)
 
-# Just a few currencies for simplicity
 CURRENCIES = {
     'USD': 'US Dollar',
     'EUR': 'Euro',
@@ -13,39 +11,67 @@ CURRENCIES = {
     'CAD': 'Canadian Dollar'
 }
 
-# API key
+CURRENCY_INFO = {
+    'USD': {
+        'name': 'US Dollar',
+        'symbol': '$',
+        'country': 'United States',
+        'image': 'USD.jpeg'
+    },
+    'EUR': {
+        'name': 'Euro',
+        'symbol': '€',
+        'country': 'European Union',
+        'image': 'EUR.jpeg'
+    },
+    'GBP': {
+        'name': 'British Pound',
+        'symbol': '£',
+        'country': 'United Kingdom',
+        'image': 'GBP.jpeg'
+    },
+    'JPY': {
+        'name': 'Japanese Yen',
+        'symbol': '¥',
+        'country': 'Japan',
+        'image': 'JPY.jpg'
+    },
+    'CAD': {
+        'name': 'Canadian Dollar',
+        'symbol': 'C$',
+        'country': 'Canada',
+        'image': 'CAD.jpg'
+    }
+}
+
 API_KEY = "89b158f9bc89cf872b350fce"
 
 @app.route('/')
 def index():
     return render_template('index.html', currencies=CURRENCIES)
 
+@app.route('/gallery')
+def gallery():
+    return render_template('currency-gallery.html', currency_info=CURRENCY_INFO)
+
 @app.route('/convert', methods=['POST'])
 def convert():
-    # Get form data
     amount = request.form.get('amount', 1)
     from_currency = request.form.get('from_currency', 'USD')
     to_currency = request.form.get('to_currency', 'EUR')
     
-    # API URL
     url = f"https://v6.exchangerate-api.com/v6/{API_KEY}/latest/{from_currency}"
     
-    # Get data from API
     response = requests.get(url)
     data = response.json()
     
-    # Check if request was successful
     if data.get('result') == 'success':
-        # Get exchange rate
         rate = data['conversion_rates'][to_currency]
         
-        # Calculate converted amount
         converted_amount = float(amount) * rate
         
-        # Get the date
         date = data.get('time_last_update_utc', '').split(' ', 1)[1]
         
-        # Return results to template
         return render_template(
             'index.html',
             currencies=CURRENCIES,
@@ -58,7 +84,6 @@ def convert():
             success=True
         )
     else:
-        # Return error
         error = "Sorry, something went wrong. Please try again."
         return render_template(
             'index.html',
