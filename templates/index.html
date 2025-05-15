@@ -37,7 +37,6 @@
     </style>
 </head>
 <body>
-    <!-- Simple Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Currency Converter</a>
@@ -94,14 +93,12 @@
         </div>
         {% endif %}
         
-        <!-- Show error if there was one -->
         {% if error %}
         <div class="alert alert-danger mt-3">
             {{ error }}
         </div>
         {% endif %}
         
-        <!-- Popular rates section -->
         <div class="card mt-4">
             <div class="card-header">
                 Popular Conversion Rates
@@ -115,7 +112,6 @@
     </div>
     
     <script>
-        // Simple dark mode toggle
         document.getElementById('darkModeBtn').addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
             
@@ -126,7 +122,6 @@
             }
         });
         
-        // Check dark mode setting
         if (localStorage.getItem('darkMode') === 'on') {
             document.body.classList.add('dark-mode');
         }

@@ -1,3 +1,37 @@
+"""
+Course: CST 205 - Python Multimedia Programming
+Title: Currency Converter
+Abstract: A Flask-based web application that allows users to convert between 
+different currencies using real-time exchange rates from the ExchangeRate API. 
+The application also features a currency gallery with interactive image filters (grayscale, sepia, and negative) 
+applied to currency images.
+Authors: Salvatore Eze
+Date: 5/14/2025
+
+Project Structure:
+- Since this is a solo project
+
+Important Code Blocks:
+1. Flask Routes (/app.py):
+   - @app.route('/'): The index route that renders the landing page
+   - @app.route('/gallery'): Renders the currency gallery with image filter
+   - @app.route('/convert', methods=['POST']): Handles the currency conversion using the ExchangeRate API
+
+2. API Integration (/app.py):
+   - The convert() function makes a request to the ExchangeRate API using the requests library
+   - API_KEY = "89b158f9bc89cf872b350fce"
+
+3. Image Manipulation (/static/js/image-filters.js):
+   - applyFilter(): Core function that takes a filter function and applies it to the canvas
+   - applyGrayscale(): Implements grayscale filter
+   - applySepia(): Creates a sepia tone 
+   - applyNegative(): Inverts all colors
+   
+Sources:
+- Exchange Rate API: https://www.exchangerate-api.com/
+- Bootstrap 5.3.0: https://getbootstrap.com/
+"""
+
 from flask import Flask, render_template, request, jsonify
 import requests
 
